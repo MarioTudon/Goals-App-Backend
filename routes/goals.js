@@ -1,12 +1,13 @@
 import { Router } from 'express'
-import { GoalController } from '../controllers/goals.js'
+import { GoalsController } from '../controllers/goals.js'
 
-export const createGoalRouter = ({ goalModel }) => {
-  const moviesRouter = Router()
+export const createGoalsRouter = ({ goalsModel }) => {
+  const goalsRouter = Router()
 
-  const movieController = new GoalController({ goalModel })
+  const goalsController = new GoalsController({ goalsModel })
 
-  moviesRouter.get('/', movieController.getAll)
+  goalsRouter.get('/', goalsController.getAll)
+  goalsRouter.post('/', goalsController.create)
 
-  return moviesRouter
+  return goalsRouter
 }

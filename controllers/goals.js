@@ -1,10 +1,15 @@
-export class GoalController {
-  constructor ({ goalModel }) {
-    this.goalModel = goalModel
+export class GoalsController {
+  constructor ({ goalsModel }) {
+    this.goalsModel = goalsModel
   }
 
   getAll = async (req, res) => {
-    const movies = await this.goalModel.getAll()
-    res.json(movies)
+    const goals = await this.goalsModel.getAll()
+    res.json(goals)
+  }
+
+  create = async (req, res) => {
+    const newGoal = await this.goalsModel.create(req.body)
+    res.json(newGoal)
   }
 }

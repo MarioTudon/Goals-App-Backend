@@ -1,1 +1,16 @@
 GET http://localhost:3000/goals
+
+
+###
+POST http://localhost:3000/goals
+Content-Type: application/json
+
+{
+    "goal": "Ir a natación",
+    "frequency": 6,
+    "frequencyUnit": "Month",
+    "target": 80,
+    "icon": "👨‍💻",
+    "id": 5,
+    "count": 0
+}
