@@ -8,6 +8,7 @@ export const createGoalsRouter = ({ goalsModel }) => {
 
   goalsRouter.get('/', goalsController.getAll)
   goalsRouter.post('/', goalsController.create)
+  goalsRouter.patch('/', goalsController.update)
 
   return goalsRouter
 }

@@ -12,4 +12,10 @@ export class GoalsController {
     const newGoal = await this.goalsModel.create(req.body)
     res.json(newGoal)
   }
+
+  update = async (req, res) => {
+    console.log(req.body)
+    const updatedGoal = await this.goalsModel.update(req.body)
+    res.json(updatedGoal)
+  }
 }
