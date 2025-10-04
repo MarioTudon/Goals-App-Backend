@@ -9,6 +9,7 @@ export const createGoalsRouter = ({ goalsModel }) => {
   goalsRouter.get('/', goalsController.getAll)
   goalsRouter.post('/', goalsController.create)
   goalsRouter.patch('/:id', goalsController.update)
+  goalsRouter.delete('/:id', goalsController.delete)
 
   return goalsRouter
 }

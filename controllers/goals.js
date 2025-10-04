@@ -1,5 +1,5 @@
 export class GoalsController {
-  constructor ({ goalsModel }) {
+  constructor({ goalsModel }) {
     this.goalsModel = goalsModel
   }
 
@@ -15,12 +15,19 @@ export class GoalsController {
 
   update = async (req, res) => {
     const { id } = req.params
-    const updatedGoal = await this.goalsModel.update({id, updatedGoal: req.body})
+    const updatedGoal = await this.goalsModel.update({ id, updatedGoal: req.body })
 
     if (updatedGoal === false) {
-      return res.status(404).json({ message: 'Goal not found' })
+      return res.status(404).json({ message: ` Goal not found ${id}` })
     }
 
     res.json(updatedGoal)
+  }
+
+  delete = async (req, res) => {
+    const {id} = req.params
+    const deletedGoal = await this.goalsModel.delete(id);
+
+    res.json(deletedGoal.id)
   }
 }

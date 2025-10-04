@@ -1,16 +1,4 @@
 {
-  "order": [
-    "1efdc86f-88ee-45f6-8d7c-782de1bf27f5"
-  ],
-  "objects": {
-    "1efdc86f-88ee-45f6-8d7c-782de1bf27f5": {
-      "goal": "Ir a natación",
-      "frequency": 7,
-      "frequencyUnit": "Month",
-      "target": 80,
-      "icon": "👨‍💻",
-      "id": "1efdc86f-88ee-45f6-8d7c-782de1bf27f5",
-      "count": 0
-    }
-  }
+  "order": [],
+  "objects": {}
 }

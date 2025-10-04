@@ -16,14 +16,17 @@ Content-Type: application/json
 }
 
 ###
-PATCH http://localhost:3000/goals/3
+PATCH http://localhost:3000/goals/c091b5ef-975c-4f5b-b3ad-3d16631998be
 Content-Type: application/json
 
 {
     "goal": "Ir a natación",
-    "frequency": 7,
+    "frequency": 89,
     "frequencyUnit": "Month",
     "target": 80,
     "icon": "👨‍💻",
     "count": 0
 }
+
+###
+DELETE http://localhost:3000/goals/c091b5ef-975c-4f5b-b3ad-3d16631998be
