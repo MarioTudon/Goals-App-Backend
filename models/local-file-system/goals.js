@@ -19,8 +19,10 @@ export class GoalsModel {
     return newGoal
   }
 
-  static async update(updatedGoal) {
-    const id = updatedGoal.id
+  static async update({id, updatedGoal}) {
+    const goalIndex = goals.order.findIndex(goalId => goalId === id)
+    if(goalIndex === -1) return false
+
     goals.objects[id] = { ...goals.objects[id], ...updatedGoal }
     writeJSON('./goals.json', goals)
   }

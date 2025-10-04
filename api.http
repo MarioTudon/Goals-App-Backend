@@ -16,15 +16,14 @@ Content-Type: application/json
 }
 
 ###
-PATCH http://localhost:3000/goals
+PATCH http://localhost:3000/goals/3
 Content-Type: application/json
 
 {
     "goal": "Ir a natación",
-    "frequency": 66,
+    "frequency": 7,
     "frequencyUnit": "Month",
     "target": 80,
     "icon": "👨‍💻",
-    "id": "1",
     "count": 0
 }

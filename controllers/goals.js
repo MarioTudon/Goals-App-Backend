@@ -14,8 +14,13 @@ export class GoalsController {
   }
 
   update = async (req, res) => {
-    console.log(req.body)
-    const updatedGoal = await this.goalsModel.update(req.body)
+    const { id } = req.params
+    const updatedGoal = await this.goalsModel.update({id, updatedGoal: req.body})
+
+    if (updatedGoal === false) {
+      return res.status(404).json({ message: 'Goal not found' })
+    }
+
     res.json(updatedGoal)
   }
 }
