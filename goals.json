@@ -1,4 +1,16 @@
 {
-  "order": [],
-  "objects": {}
+  "order": [
+    "b8413dc5-5d19-4aea-8250-848b619b3de0"
+  ],
+  "objects": {
+    "b8413dc5-5d19-4aea-8250-848b619b3de0": {
+      "goal": "Correr rapido",
+      "frequency": 6,
+      "frequencyUnit": "Month",
+      "target": 20,
+      "icon": "👨‍💻",
+      "id": "b8413dc5-5d19-4aea-8250-848b619b3de0",
+      "count": 10
+    }
+  }
 }
