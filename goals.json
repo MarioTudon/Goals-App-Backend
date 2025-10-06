@@ -1,16 +1,16 @@
 {
   "order": [
-    "aa53ee07-efc8-470b-b691-306397918e47"
+    "7e74c13b-f42e-40e0-bbdd-c3d387b0cc88"
   ],
   "objects": {
-    "aa53ee07-efc8-470b-b691-306397918e47": {
+    "7e74c13b-f42e-40e0-bbdd-c3d387b0cc88": {
       "goal": "Aprender Nodejs",
       "frequency": 5,
-      "frequencyUnit": "Month",
-      "target": 6,
-      "icon": "🎸",
-      "id": "aa53ee07-efc8-470b-b691-306397918e47",
-      "count": 0
+      "frequencyUnit": "Week",
+      "target": 15,
+      "icon": "👨‍💻",
+      "count": 7,
+      "id": "7e74c13b-f42e-40e0-bbdd-c3d387b0cc88"
     }
   }
 }

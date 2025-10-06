@@ -12,7 +12,6 @@ export class GoalsModel {
 
   static async create(newGoal) {
     newGoal.id = crypto.randomUUID()
-    newGoal.count = 0
     goals.objects[newGoal.id] = newGoal
     goals.order.push(newGoal.id)
     writeJSON('./goals.json', goals)

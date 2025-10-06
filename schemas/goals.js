@@ -10,7 +10,7 @@ const goalsSchema = z.object({
     frequencyUnit: z.enum(['Day', 'Week', 'Month', 'Year']).default('Day'),
     target: z.number().int().positive('Debe ser un número positivo').min(1, 'Debe ser mayor a 1').max(99, 'Debe ser menor a 99').default(1),
     icon: z.string().emoji('Debe ser un emoji válido').default('🏃‍♂️'),
-    count: z.number().int().optional()
+    count: z.number().int().default(0)
 });
 
 export function validateGoal(input) {
