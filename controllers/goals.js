@@ -7,7 +7,10 @@ export class GoalsController {
 
   getAll = async (req, res) => {
     const goals = await this.goalsModel.getAll()
-    res.json(goals)
+    res.json({
+      message: 'Se obtuvieron todas las metas',
+      body: goals
+    })
   }
 
   create = async (req, res) => {
@@ -19,7 +22,10 @@ export class GoalsController {
 
     const newGoal = await this.goalsModel.create(result.data)
 
-    res.json(newGoal)
+    res.json({
+      message: `Se creo la nueva meta con id: ${newGoal.id}`,
+      body: newGoal
+    })
   }
 
   update = async (req, res) => {
@@ -40,7 +46,10 @@ export class GoalsController {
       return res.status(400).json({ message: updatedGoal.message })
     }
 
-    res.json(updatedGoal)
+    res.json({
+      message: `Se actualizo la meta con id: ${id}`,
+      body: updatedGoal
+    })
   }
 
   delete = async (req, res) => {
@@ -49,7 +58,9 @@ export class GoalsController {
     if (deletedGoal === false) {
       return res.status(404).json({ message: ` Goal not found ${id}` })
     }
-
-    res.json(id)
+    res.json({
+      message: `Se borro la meta con id: ${id}`,
+      body: id
+    })
   }
 }

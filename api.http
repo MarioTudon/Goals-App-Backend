@@ -20,7 +20,7 @@ PATCH http://localhost:3000/goals/b8413dc5-5d19-4aea-8250-848b619b3de0
 Content-Type: application/json
 
 {
-    "goal": "Correr rapido",
+    "goal": "aa",
     "target": 2
 }
 
