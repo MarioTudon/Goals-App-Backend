@@ -1,4 +1,4 @@
-import { validateGoal, validatePartialGoal, validateNewGoal } from '../schemas/goals.js'
+import { validateGoal, validatePartialGoal } from '../schemas/goals.js'
 
 export class GoalsController {
   constructor({ goalsModel }) {
@@ -14,13 +14,13 @@ export class GoalsController {
   }
 
   create = async (req, res) => {
-    const result = validateNewGoal(req.body)
-    result.data.count = 0
-
+    const result = validateGoal(req.body)
+    
     if (!result.success) {
       return res.status(400).json({ error: JSON.parse(result.error.message) })
     }
 
+    result.data.count = 0
     const newGoal = await this.goalsModel.create(result.data)
 
     res.json({
