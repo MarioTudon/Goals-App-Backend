@@ -1,6 +1,6 @@
 import z from "zod";
 
-const goalsSchema = z.object({
+const goalSchema = z.object({
     goal: z.string({
         invalid_type_error: 'Debe ser un string',
         required_error: 'Es requerido'
@@ -10,13 +10,30 @@ const goalsSchema = z.object({
     frequencyUnit: z.enum(['Day', 'Week', 'Month', 'Year']).default('Day'),
     target: z.number().int().positive('Debe ser un número positivo').min(1, 'Debe ser mayor a 1').max(99, 'Debe ser menor a 99').default(1),
     icon: z.string().emoji('Debe ser un emoji válido').default('🏃‍♂️'),
-    count: z.number().int().default(0)
+    count: z.number().int().min(0)
 });
 
 export function validateGoal(input) {
-    return goalsSchema.safeParse(input);
+    return goalSchema.safeParse(input);
 }
 
 export function validatePartialGoal(input) {
-    return goalsSchema.partial().safeParse(input);
+    return goalSchema.partial().safeParse(input);
+}
+
+
+const newGoalSchema = z.object({
+    goal: z.string({
+        invalid_type_error: 'Debe ser un string',
+        required_error: 'Es requerido'
+    })
+        .min(1, 'El objetivo no puede estar vacío'),
+    frequency: z.number().int().positive('Debe ser un número positivo').min(1, 'Debe ser mayor a 1').max(99, 'Debe ser menor a 99').default(1),
+    frequencyUnit: z.enum(['Day', 'Week', 'Month', 'Year']).default('Day'),
+    target: z.number().int().positive('Debe ser un número positivo').min(1, 'Debe ser mayor a 1').max(99, 'Debe ser menor a 99').default(1),
+    icon: z.string().emoji('Debe ser un emoji válido').default('🏃‍♂️')
+});
+
+export function validateNewGoal(input) {
+    return newGoalSchema.safeParse(input);
 }

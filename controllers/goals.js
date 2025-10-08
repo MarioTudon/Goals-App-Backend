@@ -1,4 +1,4 @@
-import { validateGoal, validatePartialGoal } from '../schemas/goals.js'
+import { validateGoal, validatePartialGoal, validateNewGoal } from '../schemas/goals.js'
 
 export class GoalsController {
   constructor({ goalsModel }) {
@@ -14,7 +14,8 @@ export class GoalsController {
   }
 
   create = async (req, res) => {
-    const result = validateGoal(req.body)
+    const result = validateNewGoal(req.body)
+    result.data.count = 0
 
     if (!result.success) {
       return res.status(400).json({ error: JSON.parse(result.error.message) })
@@ -55,12 +56,14 @@ export class GoalsController {
   delete = async (req, res) => {
     const { id } = req.params
     const deletedGoal = await this.goalsModel.delete(id)
-    if (deletedGoal === false) {
-      return res.status(404).json({ message: ` Goal not found ${id}` })
+
+    if (deletedGoal.error === "not_found") {
+      return res.status(404).json({ message: `Goal not found ${id}` })
     }
+
     res.json({
       message: `Se borro la meta con id: ${id}`,
-      body: id
+      body: deletedGoal
     })
   }
 }
