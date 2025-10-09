@@ -37,9 +37,30 @@ export class GoalsModel {
             );
         });
     }
+static async update({ id, updatedGoal }) {
+  return new Promise((resolve, reject) => {
+    goalsDB.get('SELECT * FROM goals WHERE id = ?', [id], (err, goal) => {
+      if (err) return reject(err)
+      if (!goal) return resolve({ error: "not_found" })
 
-    static async update({ id, updatedGoal }) {
-    }
+      if (updatedGoal.target < goal.count) {
+        return resolve({ error: "bad_request", message: "El target no puede ser menor que la cuenta actual" })
+      }
+
+      const { sql, params } = buildUpdateQuery('goals', id, updatedGoal)
+
+      goalsDB.run(sql, params, function (err) {
+        if (err) return reject(err)
+
+        // Segunda consulta para obtener el recurso actualizado
+        goalsDB.get('SELECT * FROM goals WHERE id = ?', [id], (err, updatedGoalFromDB) => {
+          if (err) return reject(err)
+          resolve(updatedGoalFromDB)
+        })
+      })
+    })
+  })
+}
 
     static async delete(id) {
         return new Promise((resolve, reject) => {
