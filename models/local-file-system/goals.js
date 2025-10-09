@@ -1,6 +1,6 @@
 import { readJSON, writeJSON } from '../../utils.js'
 
-const goals = await readJSON('./goals.json')
+const goals = await readJSON('./models/local-file-system/goals.json')
 
 export class GoalsModel {
 
@@ -10,6 +10,7 @@ export class GoalsModel {
 
   static async create(newGoal) {
     newGoal.id = crypto.randomUUID()
+    newGoal.count = 0;
     goals.push(newGoal)
     const goalIndex = goals.findIndex(goal => goal.id === newGoal.id)
     await writeJSON('./goals.json', goals)
@@ -18,8 +19,9 @@ export class GoalsModel {
 
   static async update({ id, updatedGoal }) {
     const goalIndex = goals.findIndex(goal => goal.id === id)
+  
     if (goalIndex === -1) {
-      return { error: "not_found" }
+      return {error: true, message: 'goal_not_found'}
     }
 
     if (updatedGoal.target < goals[goalIndex].count) {
@@ -38,8 +40,9 @@ export class GoalsModel {
 
   static async delete(id) {
     const goalIndex = goals.findIndex(goal => goal.id === id)
+
     if (goalIndex === -1) {
-      return { error: "not_found" }
+      return {error: true, message: 'goal_not_found'}
     }
 
 

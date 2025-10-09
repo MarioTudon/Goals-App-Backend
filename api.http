@@ -6,13 +6,13 @@ POST http://localhost:3000/goals
 Content-Type: application/json
 
 {
-    "goal": "Aprender algo",
+    "goal": "Prueba 1",
     "frequency": 6,
-    "frequencyUnit": "Month",
-    "target": -4,
+    "frequencyUnit": "Year",
+    "target": 7,
     "icon": "👨‍💻",
     "id": 5,
-    "count": 100
+    "count": 1000
 }
 
 ###
@@ -24,4 +24,4 @@ Content-Type: application/json
 }
 
 ###
-DELETE http://localhost:3000/goals/0a3a9516-a827-4d80-b1e1-15791bf9b489
+DELETE http://localhost:3000/goals/643222ec-37ea-4a68-b4b5-da6035bf1d6c
