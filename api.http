@@ -1,28 +1,26 @@
 GET http://localhost:3000/goals
 
-
 ###
 POST http://localhost:3000/goals
 Content-Type: application/json
 
 {
-    "goal": "Prueba 2",
+    "goal": "Aprender React",
     "frequency": 6,
-    "frequencyUnit": "Year",
+    "frequencyUnit": "Week",
     "target": 7,
-    "icon": "👨‍💻",
+    "icon": "💘",
     "id": 5,
     "count": 1000
 }
 
 ###
-PATCH http://localhost:3000/goals/094a7265-23ab-4b89-8f76-611ae5d8cc9a
+PATCH http://localhost:3000/goals/098ca565-30ce-4e91-9b00-84c4821f19d1
 Content-Type: application/json
 
 {
-    "goal":"Aprender SQL",
-    "target": 22 
+    "count": 7
 }
 
 ###
-DELETE http://localhost:3000/goals/dc14b81f-b255-4e21-beab-d9c7cf1b7ce0
+DELETE http://localhost:3000/goals/098ca565-30ce-4e91-9b00-84c4821f19d1

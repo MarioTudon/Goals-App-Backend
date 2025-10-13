@@ -70,7 +70,7 @@ export class GoalsModel {
                 if (err) {
                     reject({ err, message: "select_failed" })
                 } else if (!row) {
-                    resolve({ error: true, message: 'goal_not_found' })
+                    resolve({ status: 404, error: true, message: 'goal_not_found' })
                 } else {
                     goalsDB.run('DELETE FROM goals WHERE id = ?', [id], function (err) {
                         if (err) {

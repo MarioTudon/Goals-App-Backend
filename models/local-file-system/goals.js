@@ -1,6 +1,7 @@
 import { readJSON, writeJSON } from '../../utils.js'
 
-const goals = await readJSON('./models/local-file-system/goals.json')
+const path = './models/local-file-system/goals.json'
+const goals = await readJSON(path)
 
 export class GoalsModel {
 
@@ -10,10 +11,10 @@ export class GoalsModel {
 
   static async create(newGoal) {
     newGoal.id = crypto.randomUUID()
-    newGoal.count = 0;
+    newGoal.count = 0
     goals.push(newGoal)
     const goalIndex = goals.findIndex(goal => goal.id === newGoal.id)
-    await writeJSON('./goals.json', goals)
+    await writeJSON(path, goals)
     return goals[goalIndex]
   }
 
@@ -24,7 +25,7 @@ export class GoalsModel {
       return { status: 404, error: true, message: 'goal_not_found' }
     }
 
-    if (updatedGoal.target < goals[goalIndex].count || updatedGoal.target < updatedGoal.count || updatedGoal.countW) {
+    if (updatedGoal.target < goals[goalIndex].count || updatedGoal.target < updatedGoal.count) {
       return { status: 400, error: true, message: "target_less_than_count" }
     }
 
@@ -32,8 +33,7 @@ export class GoalsModel {
       ...goals[goalIndex],
       ...updatedGoal
     }
-
-    await writeJSON('./goals.json', goals)
+    await writeJSON(path, goals)
 
     return goals[goalIndex]
   }
@@ -45,9 +45,8 @@ export class GoalsModel {
       return { status: 404, error: true, message: 'goal_not_found' }
     }
 
-
     const deletedGoal = goals.splice(goalIndex, 1)[0]
-    await writeJSON('./goals.json', goals)
+    await writeJSON(path, goals)
 
     return deletedGoal
   }
