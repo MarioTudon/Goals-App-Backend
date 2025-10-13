@@ -6,6 +6,7 @@
   "scripts": {
     "dev-local": "node --watch server-with-local.js",
     "dev-sqlite": "node --watch server-with-sqlite",
+    "start": "node server-with-sqlite.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
