@@ -19,13 +19,13 @@ export class GoalsModel {
 
   static async update({ id, updatedGoal }) {
     const goalIndex = goals.findIndex(goal => goal.id === id)
-  
+
     if (goalIndex === -1) {
-      return {error: true, message: 'goal_not_found'}
+      return { status: 404, error: true, message: 'goal_not_found' }
     }
 
-    if (updatedGoal.target < goals[goalIndex].count) {
-      return { error: "bad_request", message: "El target no puede ser menor que la cuenta actual" }
+    if (updatedGoal.target < goals[goalIndex].count || updatedGoal.target < updatedGoal.count || updatedGoal.countW) {
+      return { status: 400, error: true, message: "target_less_than_count" }
     }
 
     goals[goalIndex] = {
@@ -42,7 +42,7 @@ export class GoalsModel {
     const goalIndex = goals.findIndex(goal => goal.id === id)
 
     if (goalIndex === -1) {
-      return {error: true, message: 'goal_not_found'}
+      return { status: 404, error: true, message: 'goal_not_found' }
     }
 
 

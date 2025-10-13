@@ -9,7 +9,7 @@ export class GoalsController {
     try {
       const goals = await this.goalsModel.getAll()
       return res.json({
-        message: 'Se obtuvieron todas las metas',
+        message: 'all_goals_have_been_gotten',
         body: goals
       })
     }
@@ -33,7 +33,7 @@ export class GoalsController {
     try {
       const newGoal = await this.goalsModel.create(result.data)
       return res.json({
-        message: `Se creo la nueva meta con id: ${newGoal.id}`,
+        message: `the_goal_has_been_created`,
         body: newGoal
       })
     }
@@ -55,21 +55,28 @@ export class GoalsController {
         details: result.error.issues
       })
     }
+
     const { id } = req.params
-    const updatedGoal = await this.goalsModel.update({ id, updatedGoal: result.data })
-
-    if (updatedGoal.error === "not_found") {
-      return res.status(404).json({ message: `Goal not found ${id}` })
+    try {
+      const updatedGoal = await this.goalsModel.update({ id, updatedGoal: result.data })
+      if (updatedGoal.error) {
+        return res.status(updatedGoal.status).json({
+          error: true,
+          message: updatedGoal.message
+        })
+      }
+      return res.json({
+        message: `the_goal_has_been_updated`,
+        body: updatedGoal
+      })
     }
-
-    if (updatedGoal.error === "bad_request") {
-      return res.status(400).json({ message: updatedGoal.message })
+    catch (err) {
+      return res.status(500).json({
+        error: true,
+        message: 'internal_error',
+        details: err.message
+      })
     }
-
-    res.json({
-      message: `Se actualizo la meta con id: ${id}`,
-      body: updatedGoal
-    })
   }
 
   delete = async (req, res) => {
@@ -77,13 +84,13 @@ export class GoalsController {
     try {
       const deletedGoal = await this.goalsModel.delete(id)
       if (deletedGoal.error) {
-        return res.status(404).json({
+        return res.status(deletedGoal.status).json({
           error: true,
           message: deletedGoal.message
         })
       }
       return res.json({
-        message: `Se borro la meta con id: ${id}`,
+        message: `the_goal_has_been_deleted`,
         body: deletedGoal
       })
     }

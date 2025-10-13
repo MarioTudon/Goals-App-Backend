@@ -6,7 +6,7 @@ POST http://localhost:3000/goals
 Content-Type: application/json
 
 {
-    "goal": "Prueba 1",
+    "goal": "Prueba 2",
     "frequency": 6,
     "frequencyUnit": "Year",
     "target": 7,
@@ -16,12 +16,13 @@ Content-Type: application/json
 }
 
 ###
-PATCH http://localhost:3000/goals/c4f31128-8a88-450b-aa40-bfade5c3dcd7
+PATCH http://localhost:3000/goals/094a7265-23ab-4b89-8f76-611ae5d8cc9a
 Content-Type: application/json
 
 {
-    "target": 19
+    "goal":"Aprender SQL",
+    "target": 22 
 }
 
 ###
-DELETE http://localhost:3000/goals/643222ec-37ea-4a68-b4b5-da6035bf1d6c
+DELETE http://localhost:3000/goals/dc14b81f-b255-4e21-beab-d9c7cf1b7ce0
