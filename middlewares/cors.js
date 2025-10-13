@@ -1,7 +1,8 @@
 import cors from 'cors'
 
 const ACCEPTED_ORIGINS = [
-  'http://localhost:5173'
+  'http://localhost:5173',
+  'https://goals-app-mario.netlify.app/Goals-List'
 ]
 
 export const corsMiddleware = ({ acceptedOrigins = ACCEPTED_ORIGINS } = {}) => cors({
