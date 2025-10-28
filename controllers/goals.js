@@ -1,11 +1,12 @@
 import { validateGoal, validatePartialGoal } from '../schemas/goals.js'
+import customErrors from '../errors/customErrors.js'
 
 export class GoalsController {
   constructor({ goalsModel }) {
     this.goalsModel = goalsModel
   }
 
-  getAll = async (req, res) => {
+  getAll = async (req, res, next) => {
     try {
       const goals = await this.goalsModel.getAll()
       return res.json({
@@ -14,22 +15,20 @@ export class GoalsController {
       })
     }
     catch (err) {
-      return res.status(500).json({
-        message: 'internal_error',
-        details: err.message
-      });
+      return next(err)
     }
   }
 
   create = async (req, res) => {
     const result = validateGoal(req.body)
+
     if (!result.success) {
-      return res.status(400).json({
-        error: true,
-        message: 'bad_request',
-        details: result.error.issues
-      })
+      return next(new customErrors.AppError('data validation failed', 'bad request', 400, result.error.issues.map(issue => ({
+        field: issue.path.join('.'),
+        message: issue.message.replaceAll("_", " ")
+      }))))
     }
+    
     try {
       const newGoal = await this.goalsModel.create(result.data)
       return res.json({
@@ -38,68 +37,44 @@ export class GoalsController {
       })
     }
     catch (err) {
-      return res.status(500).json({
-        error: true,
-        message: 'internal_error',
-        details: err
-      });
+      return next(err)
     }
   }
 
-  update = async (req, res) => {
+  update = async (req, res, next) => {
     const result = validatePartialGoal(req.body)
+
     if (!result.success) {
-      return res.status(400).json({
-        error: true,
-        message: 'bad_request',
-        details: result.error.issues
-      })
+      return next(new customErrors.AppError('data validation failed', 'bad request', 400, result.error.issues.map(issue => ({
+        field: issue.path.join('.'),
+        message: issue.message.replaceAll("_", " ")
+      }))))
     }
 
     const { id } = req.params
     try {
       const updatedGoal = await this.goalsModel.update({ id, updatedGoal: result.data })
-      if (updatedGoal.error) {
-        return res.status(updatedGoal.status).json({
-          error: true,
-          message: updatedGoal.message
-        })
-      }
       return res.json({
         message: `the_goal_has_been_updated`,
         body: updatedGoal
       })
     }
     catch (err) {
-      return res.status(500).json({
-        error: true,
-        message: 'internal_error',
-        details: err.message
-      })
+      return next(err)
     }
   }
 
-  delete = async (req, res) => {
+  delete = async (req, res, next) => {
     const { id } = req.params
     try {
       const deletedGoal = await this.goalsModel.delete(id)
-      if (deletedGoal.error) {
-        return res.status(deletedGoal.status).json({
-          error: true,
-          message: deletedGoal.message
-        })
-      }
       return res.json({
         message: `the_goal_has_been_deleted`,
         body: deletedGoal
       })
     }
     catch (err) {
-      return res.status(500).json({
-        error: true,
-        message: 'internal_error',
-        details: err.message
-      });
+      return next(err)
     }
   }
 }
