@@ -1,5 +1,6 @@
 import { Router } from 'express'
 import { GoalsController } from '../controllers/goals.js'
+import { verifyAccessToken } from '../middlewares/verifyToken.js'
 
 export const createGoalsRouter = ({ goalsModel }) => {
   const goalsRouter = Router()

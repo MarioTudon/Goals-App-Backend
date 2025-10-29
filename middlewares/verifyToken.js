@@ -1,7 +1,7 @@
 import { ACCESS_JWT_KEY, REFRESH_JWT_KEY } from '../config.js'
 import jwt from 'jsonwebtoken'
 import { goalsAppDB } from '../config.js'
-import customErrors from '../error/customErrors.js'
+import customErrors from '../errors/customErrors.js'
 
 export const verifyAccessToken = (req, res, next) => {
     const token = req.cookies.access_token
