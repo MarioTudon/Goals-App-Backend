@@ -19,7 +19,7 @@ export class GoalsController {
     }
   }
 
-  create = async (req, res) => {
+  create = async (req, res, next) => {
     const result = validateGoal(req.body)
 
     if (!result.success) {
@@ -53,7 +53,7 @@ export class GoalsController {
 
     const { id } = req.params
     try {
-      const updatedGoal = await this.goalsModel.update({ id, updatedGoal: result.data })
+      const updatedGoal = await this.goalsModel.update({ id, updatedGoalData: result.data })
       return res.json({
         message: `the_goal_has_been_updated`,
         body: updatedGoal

@@ -1,6 +1,6 @@
-import { goalsAppDB } from '../../config.js'
-import { buildInsertQuery, buildUpdateQuery } from '../../utils.js'
-import customErrors from '../../errors/customErrors.js'
+import { goalsAppDB } from '../config.js'
+import { buildInsertQuery, buildUpdateQuery } from '../utils.js'
+import customErrors from '../errors/customErrors.js'
 
 
 export class GoalsModel {
@@ -16,7 +16,12 @@ export class GoalsModel {
 
     static async create(newGoalData) {
         const id = crypto.randomUUID()
-        const { sql, params } = buildInsertQuery('goals', id, newGoalData)
+        const temporal = newGoalData;
+        temporal.userId = 'hola'
+        console.log(temporal)
+        const { sql, params } = buildInsertQuery('goals', id, temporal)
+        console.log(sql)
+        console.log(params)
 
         await new Promise((resolve, reject) => {
             goalsAppDB.run(sql, params, (err) => {
@@ -25,7 +30,7 @@ export class GoalsModel {
             })
         })
 
-        const newGoal = Promise((resolve, reject) => {
+        const newGoal = await new Promise((resolve, reject) => {
             goalsAppDB.get('SELECT * FROM goals WHERE id = ?', [id], (err, row) => {
                 if (err) reject(new customErrors.AppError(err.message, 'internal error', 500, 'something went wrong, please try again later'))
                 resolve(row)
@@ -37,7 +42,7 @@ export class GoalsModel {
 
 
     static async update({ id, updatedGoalData }) {
-        const goal = Promise((resolve, reject) => {
+        const goal = await new Promise((resolve, reject) => {
             goalsAppDB.get('SELECT * FROM goals WHERE id = ?', [id], (err, row) => {
                 if (err) reject(new customErrors.AppError(err.message, 'internal error', 500, 'something went wrong, please try again later'))
                 resolve(row)
@@ -48,13 +53,14 @@ export class GoalsModel {
             throw new customErrors.AppError('the goal does not exist on database', 'not found', 404, 'the goal has not been found')
         }
 
-        if (updatedGoalData.target < row.count || updatedGoalData.target < updatedGoalData.count) {
+        if (updatedGoalData.target < goal.count || updatedGoalData.target < updatedGoalData.count) {
             throw new customErrors.AppError('data validation failed', 'bad request', 400, 'the target must be greater than the count.')
         }
 
+
         const { sql, params } = buildUpdateQuery('goals', id, updatedGoalData)
 
-        await new Promise((reject, resolve) => {
+        await new Promise((resolve, reject) => {
             goalsAppDB.run(sql, params, (err) => {
                 if (err) reject(new customErrors.AppError(err.message, 'internal error', 500, 'something went wrong, please try again later'))
                 resolve()
@@ -67,18 +73,17 @@ export class GoalsModel {
                 resolve(row)
             })
         })
-
         return updatedGoal
     }
 
     static async delete(id) {
-        const goal = Promise((resolve, reject) => {
+        const goal = await new Promise((resolve, reject) => {
             goalsAppDB.get('SELECT * FROM goals WHERE id = ?', [id], (err, row) => {
                 if (err) reject(new customErrors.AppError(err.message, 'internal error', 500, 'something went wrong, please try again later'))
                 resolve(row)
             })
         })
-        
+
         if (!goal) {
             throw new customErrors.AppError('the goal does not exist on database', 'not found', 404, 'the goal has not been found')
         }

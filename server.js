@@ -1,5 +1,5 @@
 import { createApp } from './app.js'
 
-import { GoalsModel } from './models/local-file-system/goals.js'
+import { GoalsModel } from './models/goals.js'
 
 createApp({ goalsModel: GoalsModel })

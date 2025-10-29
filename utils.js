@@ -13,6 +13,7 @@ export const writeJSON = async (path, jsonData) => {
 
 export function buildInsertQuery(table, id, data) {
     const allowedKeys = {
+        userId: true,
         goal: true,
         frequency: true,
         frequencyUnit: true,
