@@ -18,10 +18,7 @@ export class GoalsModel {
         const id = crypto.randomUUID()
         const temporal = newGoalData;
         temporal.userId = 'hola'
-        console.log(temporal)
         const { sql, params } = buildInsertQuery('goals', id, temporal)
-        console.log(sql)
-        console.log(params)
 
         await new Promise((resolve, reject) => {
             goalsAppDB.run(sql, params, (err) => {

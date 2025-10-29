@@ -15,7 +15,7 @@ Content-Type: application/json
 }
 
 ###
-PATCH http://localhost:3000/goals/1936608d-1711-450e-ac71-5c86e06a4f31
+PATCH http://localhost:3000/goals/1936608d-1711-450e-ac71-5c86e06a4f1
 Content-Type: application/json
 
 {

@@ -1,7 +1,7 @@
-import { goalsAppDB } from "./config.js";
+import { goalsAppDB } from "./config.js"
 
 async function setupDatabase() {
-  await goalsAppDB.run('PRAGMA foreign_keys = ON');
+  await goalsAppDB.run('PRAGMA foreign_keys = ON')
 
   // Crear tabla users
   await goalsAppDB.run(`
@@ -10,7 +10,7 @@ async function setupDatabase() {
       username TEXT UNIQUE NOT NULL,
       password TEXT NOT NULL
     );
-  `);
+  `)
 
   // Crear tabla goals
   await goalsAppDB.run(`
@@ -25,7 +25,7 @@ async function setupDatabase() {
       count INT NOT NULL,
       FOREIGN KEY (userId) REFERENCES users(id) ON DELETE CASCADE
     );
-  `);
+  `)
 
   // Crear tabla refreshTokens
   await goalsAppDB.run(`
@@ -37,10 +37,10 @@ async function setupDatabase() {
       createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
       FOREIGN KEY (userId) REFERENCES users(id) ON DELETE CASCADE
     );
-  `);
+  `)
 
-  console.log("✅ Tablas creadas correctamente.");
-  await goalsAppDB.close();
+  console.log("✅ Tablas creadas correctamente.")
+  await goalsAppDB.close()
 }
 
-setupDatabase().catch(console.error);
+setupDatabase().catch(console.error)
