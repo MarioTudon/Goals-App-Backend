@@ -11,8 +11,8 @@ export class AuthController {
 
     get = async (req, res, next) => {
         try {
-            const username = req.body.username
-            const response = await this.authModel.get(username)
+            const userId = req.body.userId
+            const response = await this.authModel.get(userId)
             return res.json({
                 message: 'authenticated',
                 username: username
@@ -24,10 +24,13 @@ export class AuthController {
     }
 
     refresh = async (req, res) => {
-        const id = req.body.id
-        const username = req.body.username
+        const token = req.cookies.access_token
+        const payload = jwt.decode(token)
+        console.log(payload)
+        const userId = payload.userId
+        const username = payload.username
         const newAccessToken = jwt.sign({
-            id: id,
+            userId: userId,
             username: username
         }, ACCESS_JWT_KEY, {
             expiresIn: '15m'
@@ -44,6 +47,7 @@ export class AuthController {
 
     register = async (req, res, next) => {
         const result = validateUser(req.body)
+        console.log(req.body)
 
         if (!result.success) {
             const firstIssue = result.error.issues[0]
@@ -69,14 +73,14 @@ export class AuthController {
             const user = await this.authModel.login(req.body)
 
             const accessToken = jwt.sign({
-                id: user.id,
+                userId: user.id,
                 username: user.username
             }, ACCESS_JWT_KEY, {
                 expiresIn: '15m'
             })
 
             const refreshToken = jwt.sign({
-                id: user.id,
+                userId: user.id,
                 username: user.username
             }, REFRESH_JWT_KEY, {
                 expiresIn: '7d'

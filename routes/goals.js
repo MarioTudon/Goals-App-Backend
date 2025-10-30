@@ -7,10 +7,10 @@ export const createGoalsRouter = ({ goalsModel }) => {
 
   const goalsController = new GoalsController({ goalsModel })
 
-  goalsRouter.get('/', goalsController.getAll)
-  goalsRouter.post('/', goalsController.create)
-  goalsRouter.patch('/:id', goalsController.update)
-  goalsRouter.delete('/:id', goalsController.delete)
+  goalsRouter.get('/', verifyAccessToken, goalsController.getAll)
+  goalsRouter.post('/', verifyAccessToken, goalsController.create)
+  goalsRouter.patch('/:id', verifyAccessToken, goalsController.update)
+  goalsRouter.delete('/:id', verifyAccessToken, goalsController.delete)
 
   return goalsRouter
 }

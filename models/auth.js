@@ -69,7 +69,7 @@ export class AuthModel {
             })
 
             if (!user) {
-                throw new customErrors.AppError('the user does not exist on database', 'not found', 404, 'the user has not been found')
+                throw new customErrors.AppError('the user does not exist on database', 'not found', 404, 'the user is incorrect')
             }
 
             const isValid = await bcrypt.compare(userData.password, user.password)

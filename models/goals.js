@@ -5,9 +5,9 @@ import customErrors from '../errors/customErrors.js'
 
 export class GoalsModel {
 
-    static async getAll() {
+    static async getAll(userId) {
         return await new Promise((resolve, reject) => {
-            goalsAppDB.all('SELECT * FROM goals', (err, rows) => {
+            goalsAppDB.all('SELECT * FROM goals WHERE userId = ?',[userId], (err, rows) => {
                 if (err) reject(new customErrors.AppError(err.message, 'internal error', 500, 'something went wrong, please try again later'))
                 else resolve(rows)
             })
@@ -16,9 +16,8 @@ export class GoalsModel {
 
     static async create(newGoalData) {
         const id = crypto.randomUUID()
-        const temporal = newGoalData;
-        temporal.userId = 'hola'
-        const { sql, params } = buildInsertQuery('goals', id, temporal)
+
+        const { sql, params } = buildInsertQuery('goals', id, newGoalData)
 
         await new Promise((resolve, reject) => {
             goalsAppDB.run(sql, params, (err) => {

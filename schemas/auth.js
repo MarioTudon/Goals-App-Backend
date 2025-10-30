@@ -5,19 +5,25 @@ const userSchema = z.object({
         invalid_type_error: 'must be a string',
         required_error: 'is required'
     })
-    .min(6, 'must be at least 6 characters long')
-    .regex(/^[^\s]+$/, 'must not contain spaces')
-    .transform(val => val.toLowerCase()),
+        .min(6, 'must be at least 6 characters long')
+        .regex(/^[^\s]+$/, 'must not contain spaces')
+        .transform(val => val.toLowerCase()),
+
     password: z.string({
-        invalid_type_error: 'must be a tring',
+        invalid_type_error: 'must be a string',
         required_error: 'is required'
     })
-    .min(8, 'must be at least 8 characters long')
-    .regex(/[a-z]/, 'must contain at least one lowercase character')
-    .regex(/[A-Z]/, 'must contain at least one uppercase character')
-    .regex(/[A-Z]/, 'must contain at least one number')
-    .regex(/^[^\s]+$/, 'must not contain spaces')
-})
+        .min(8, 'must be at least 8 characters long')
+        .regex(/[a-z]/, 'must contain at least one lowercase character')
+        .regex(/[A-Z]/, 'must contain at least one uppercase character')
+        .regex(/[0-9]/, 'must contain at least one number') // ← aquí corregí el regex para números
+        .regex(/^[^\s]+$/, 'must not contain spaces'),
+
+    confirmPassword: z.string()
+}).refine(data => data.password === data.confirmPassword, {
+    message: "passwords don't match",
+    path: [""]
+});
 
 export function validateUser(input) {
     return userSchema.safeParse(input)
