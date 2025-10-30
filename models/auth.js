@@ -59,7 +59,12 @@ export class AuthModel {
     }
 
     static async login(userData) {
-        const normalizedUsername = userData.username.trim().toLowerCase()
+        if (!userData.username) {
+            throw new customErrors.AppError('No se proporcionaron datos de usuario', 'bad request', 400, 'login information is missing'
+            );
+        }
+        const normalizedUsername = userData.username?.trim().toLowerCase()
+
         try {
             const user = await new Promise((resolve, reject) => {
                 goalsAppDB.get('SELECT * FROM users WHERE username = ?', [normalizedUsername], (err, row) => {
@@ -69,7 +74,7 @@ export class AuthModel {
             })
 
             if (!user) {
-                throw new customErrors.AppError('the user does not exist on database', 'not found', 404, 'the user is incorrect')
+                throw new customErrors.AppError('the user does not exist on database', 'not found', 404, 'the username does not exist')
             }
 
             const isValid = await bcrypt.compare(userData.password, user.password)

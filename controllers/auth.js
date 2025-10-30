@@ -46,7 +46,6 @@ export class AuthController {
 
     register = async (req, res, next) => {
         const result = validateUser(req.body)
-        console.log(req.body)
 
         if (!result.success) {
             const firstIssue = result.error.issues[0]

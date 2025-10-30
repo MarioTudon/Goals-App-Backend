@@ -50,7 +50,7 @@ export class GoalsModel {
         }
 
         if (updatedGoalData.target < goal.count || updatedGoalData.target < updatedGoalData.count) {
-            throw new customErrors.AppError('data validation failed', 'bad request', 400, 'target must be greater than the count')
+            throw new customErrors.AppError('data validation failed', 'bad request', 400, ' target must be greater than the count')
         }
 
 
