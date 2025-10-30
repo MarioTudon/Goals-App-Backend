@@ -4,8 +4,7 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "dev-local": "node --watch server-with-local",
-    "dev-sqlite": "node --watch server-with-sqlite",
+    "dev": "node --watch server",
     "start": "node server-with-sqlite.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -13,9 +12,15 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cookie-parser": "^1.4.7",
     "cors": "2.8.5",
     "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
     "sqlite3": "^5.1.7",
     "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "dotenv": "^17.2.3"
   }
 }

@@ -15,12 +15,14 @@ Content-Type: application/json
 }
 
 ###
-PATCH http://localhost:3000/goals/098ca565-30ce-4e91-9b00-84c4821f19d1
+PATCH http://localhost:3000/goals/1936608d-1711-450e-ac71-5c86e06a4f1
 Content-Type: application/json
 
 {
-    "count": 7
+    "target": 1
 }
 
 ###
-DELETE http://localhost:3000/goals/098ca565-30ce-4e91-9b00-84c4821f19d1
+DELETE http://localhost:3000/goals/ffe3c374-eafe-40ec-a5d8-316d51ad83b1
+
+###
