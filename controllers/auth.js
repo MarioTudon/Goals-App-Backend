@@ -46,10 +46,8 @@ export class AuthController {
         const result = validateUser(req.body)
 
         if (!result.success) {
-            return next(new customErrors.AppError('data validation failed', 'bad request', 400, result.error.issues.map(issue => ({
-                field: issue.path.join('.'),
-                message: issue.message.replaceAll("_", " ")
-            }))))
+            const firstIssue = result.error.issues[0]
+            return next(new customErrors.AppError('data validation failed', 'bad request', 400, `${firstIssue.path[firstIssue.path.length - 1]} ${firstIssue.message}`))
         }
 
         try {
@@ -116,7 +114,7 @@ export class AuthController {
     logout = async (req, res, next) => {
         const refreshToken = req.cookies.refresh_token
         try {
-            this.usersModel.logout(refreshToken)
+            this.authModel.logout(refreshToken)
             return res.clearCookie('access_token').clearCookie('refresh_token').json({
                 message: 'you have been logged out'
             })
