@@ -26,7 +26,6 @@ export class AuthController {
     refresh = async (req, res) => {
         const token = req.cookies.access_token
         const payload = jwt.decode(token)
-        console.log(payload)
         const userId = payload.userId
         const username = payload.username
         const newAccessToken = jwt.sign({

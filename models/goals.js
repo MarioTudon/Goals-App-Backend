@@ -37,7 +37,7 @@ export class GoalsModel {
     }
 
 
-    static async update({ id, updatedGoalData }) {
+    static async update({ id, updatedGoalData, userId }) {
         const goal = await new Promise((resolve, reject) => {
             goalsAppDB.get('SELECT * FROM goals WHERE id = ?', [id], (err, row) => {
                 if (err) reject(new customErrors.AppError(err.message, 'internal error', 500, 'something went wrong, please try again later'))
@@ -50,7 +50,7 @@ export class GoalsModel {
         }
 
         if (updatedGoalData.target < goal.count || updatedGoalData.target < updatedGoalData.count) {
-            throw new customErrors.AppError('data validation failed', 'bad request', 400, 'the target must be greater than the count.')
+            throw new customErrors.AppError('data validation failed', 'bad request', 400, 'target must be greater than the count')
         }
 
 
@@ -72,7 +72,7 @@ export class GoalsModel {
         return updatedGoal
     }
 
-    static async delete(id) {
+    static async delete({id, userId}) {
         const goal = await new Promise((resolve, reject) => {
             goalsAppDB.get('SELECT * FROM goals WHERE id = ?', [id], (err, row) => {
                 if (err) reject(new customErrors.AppError(err.message, 'internal error', 500, 'something went wrong, please try again later'))

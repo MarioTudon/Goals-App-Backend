@@ -8,9 +8,8 @@ export class GoalsController {
   }
 
   getAll = async (req, res, next) => {
-    const token = req.cookies.access_token
-    const payload = jwt.decode(token)
-    const userId = payload.userId
+    const userId = req.body.userId
+
     try {
       const goals = await this.goalsModel.getAll(userId)
       return res.json({
@@ -25,14 +24,12 @@ export class GoalsController {
 
   create = async (req, res, next) => {
     const result = validateGoal(req.body)
-    result.data.userId = req.body.userId
-    console.log(req.body)
+
     if (!result.success) {
-      return next(new customErrors.AppError('data validation failed', 'bad request', 400, result.error.issues.map(issue => ({
-        field: issue.path.join('.'),
-        message: issue.message.replaceAll("_", " ")
-      }))))
+      const firstIssue = result.error.issues[0]
+      return next(new customErrors.AppError('data validation failed', 'bad request', 400, `${firstIssue.path[firstIssue.path.length - 1]} ${firstIssue.message}`))
     }
+    result.data.userId = req.body.userId
 
     try {
       const newGoal = await this.goalsModel.create(result.data)
@@ -48,17 +45,16 @@ export class GoalsController {
 
   update = async (req, res, next) => {
     const result = validatePartialGoal(req.body)
-
+    
     if (!result.success) {
-      return next(new customErrors.AppError('data validation failed', 'bad request', 400, result.error.issues.map(issue => ({
-        field: issue.path.join('.'),
-        message: issue.message.replaceAll("_", " ")
-      }))))
+      const firstIssue = result.error.issues[0]
+      return next(new customErrors.AppError('data validation failed', 'bad request', 400, `${firstIssue.path[firstIssue.path.length - 1]} ${firstIssue.message}`))
     }
 
     const { id } = req.params
+    const userId = req.body.userId
     try {
-      const updatedGoal = await this.goalsModel.update({ id, updatedGoalData: result.data })
+      const updatedGoal = await this.goalsModel.update({ id, updatedGoalData: result.data, userId })
       return res.json({
         message: `the_goal_has_been_updated`,
         body: updatedGoal
@@ -71,8 +67,10 @@ export class GoalsController {
 
   delete = async (req, res, next) => {
     const { id } = req.params
+    const userId = req.body.userId
+
     try {
-      const deletedGoal = await this.goalsModel.delete(id)
+      const deletedGoal = await this.goalsModel.delete({ id, userId })
       return res.json({
         message: `the_goal_has_been_deleted`,
         body: deletedGoal
