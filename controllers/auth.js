@@ -24,10 +24,9 @@ export class AuthController {
     }
 
     refresh = async (req, res) => {
-        const token = req.cookies.access_token
-        const payload = jwt.decode(token)
-        const userId = payload.userId
-        const username = payload.username
+        const userId = req.body.userId
+        const username = req.body.username
+
         const newAccessToken = jwt.sign({
             userId: userId,
             username: username
@@ -38,7 +37,8 @@ export class AuthController {
         return res.cookie('access_token', newAccessToken, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
-            sameSite: 'strict'
+            sameSite: 'strict',
+            maxAge: 1000 * 60 * 15
         }).json({
             message: `the_token_has_been_refreshed`
         })
@@ -98,11 +98,13 @@ export class AuthController {
             return res.cookie('access_token', accessToken, {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production',
-                sameSite: 'strict'
+                sameSite: 'strict',
+                maxAge: 1000 * 60 * 15
             }).cookie('refresh_token', refreshToken, {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production',
-                sameSite: 'strict'
+                sameSite: 'strict',
+                maxAge: 1000 * 60 * 60 * 24 * 7
             }).json({
                 message: `the user has logged in`,
                 username: user.username
