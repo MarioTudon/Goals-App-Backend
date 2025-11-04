@@ -38,7 +38,8 @@ export class AuthController {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
             sameSite: 'strict',
-            maxAge: 1000 * 60 * 15
+            maxAge: 1000 * 60 * 15,
+            expires: new Date(Date.now() + 1000 * 60 * 15)
         }).json({
             message: `the_token_has_been_refreshed`
         })
@@ -99,12 +100,14 @@ export class AuthController {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production',
                 sameSite: 'strict',
-                maxAge: 1000 * 60 * 15
+                maxAge: 1000 * 60 * 15,
+                expires: new Date(Date.now() + 1000 * 60 * 15)
             }).cookie('refresh_token', refreshToken, {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production',
                 sameSite: 'strict',
-                maxAge: 1000 * 60 * 60 * 24 * 7
+                maxAge: 1000 * 60 * 60 * 24 * 7,
+                expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7)
             }).json({
                 message: `the user has logged in`,
                 username: user.username
