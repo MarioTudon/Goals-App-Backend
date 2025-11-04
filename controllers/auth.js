@@ -37,7 +37,7 @@ export class AuthController {
         return res.cookie('access_token', newAccessToken, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
-            sameSite: 'strict',
+            sameSite: 'none',
             maxAge: 1000 * 60 * 15,
             expires: new Date(Date.now() + 1000 * 60 * 15)
         }).json({
@@ -99,13 +99,13 @@ export class AuthController {
             return res.cookie('access_token', accessToken, {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production',
-                sameSite: 'strict',
+                sameSite: 'none',
                 maxAge: 1000 * 60 * 15,
                 expires: new Date(Date.now() + 1000 * 60 * 15)
             }).cookie('refresh_token', refreshToken, {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production',
-                sameSite: 'strict',
+                sameSite: 'none',
                 maxAge: 1000 * 60 * 60 * 24 * 7,
                 expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7)
             }).json({
