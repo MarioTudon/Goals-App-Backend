@@ -33,7 +33,7 @@ export const verifyRefreshToken = async (req, res, next) => {
 
     jwt.verify(token, REFRESH_JWT_KEY, (err, body) => {
         if (err) return next(new customErrors.AppError(err.message, err.message, 401, 'the token is invalid or has expired'))
-        req.body = { ...req.body, body }
+        req.body = { ...req.body, ...body }
         next()
     })
 }
