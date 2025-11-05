@@ -23,7 +23,7 @@ export class AuthController {
         }
     }
 
-    refresh = async (req, res) => {
+    refresh = async (req, res, next) => {
         try{
             const { userId, username } = req.body
             const newAccessToken = jwt.sign({
