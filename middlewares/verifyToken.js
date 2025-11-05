@@ -28,7 +28,7 @@ export const verifyRefreshToken = async (req, res, next) => {
     })
 
     if (!storedToken) {
-        throw new customErrors.AppError('the refresh token does not exist in the database', 'not found', 404, 'the token does not exists')
+        return next(new customErrors.AppError('the refresh token does not exist in the database', 'not found', 404, 'the token does not exists'))
     }
 
     jwt.verify(token, REFRESH_JWT_KEY, (err, body) => {
