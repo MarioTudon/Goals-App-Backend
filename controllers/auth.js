@@ -32,20 +32,19 @@ export class AuthController {
                 }, ACCESS_JWT_KEY, {
                 expiresIn: '15m'
                 })
+            return res.cookie('access_token', newAccessToken, {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === 'production',
+                sameSite: 'none',
+                maxAge: 1000 * 60 * 15,
+                expires: new Date(Date.now() + 1000 * 60 * 15)
+            }).json({
+                message: `the_token_has_been_refreshed`,
+                username: username
+            })
         } catch (err) {
             return next(err)
         }
-        
-        return res.cookie('access_token', newAccessToken, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: 'none',
-            maxAge: 1000 * 60 * 15,
-            expires: new Date(Date.now() + 1000 * 60 * 15)
-        }).json({
-            message: `the_token_has_been_refreshed`,
-            username: username
-        })
     }
 
     register = async (req, res, next) => {
