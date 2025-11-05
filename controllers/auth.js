@@ -33,6 +33,7 @@ export class AuthController {
                 expiresIn: '15m'
                 })
         } catch (err) {
+            return next(err)
         }
         
         return res.cookie('access_token', newAccessToken, {
