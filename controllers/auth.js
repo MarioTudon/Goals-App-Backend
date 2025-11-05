@@ -41,7 +41,8 @@ export class AuthController {
             maxAge: 1000 * 60 * 15,
             expires: new Date(Date.now() + 1000 * 60 * 15)
         }).json({
-            message: `the_token_has_been_refreshed`
+            message: `the_token_has_been_refreshed`,
+            username: username
         })
     }
 
