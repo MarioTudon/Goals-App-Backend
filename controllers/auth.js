@@ -24,16 +24,17 @@ export class AuthController {
     }
 
     refresh = async (req, res) => {
-        const userId = req.body.userId
-        const username = req.body.username
-
-        const newAccessToken = jwt.sign({
-            userId: userId,
-            username: username
-        }, ACCESS_JWT_KEY, {
-            expiresIn: '15m'
-        })
-
+        try{
+            const { userId, username } = req.body
+            const newAccessToken = jwt.sign({
+                userId,
+                username
+                }, ACCESS_JWT_KEY, {
+                expiresIn: '15m'
+                })
+        } catch (err) {
+        }
+        
         return res.cookie('access_token', newAccessToken, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
