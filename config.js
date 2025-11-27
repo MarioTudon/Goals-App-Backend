@@ -1,7 +1,9 @@
-import dotenv from 'dotenv'
 import sqlite3 from 'sqlite3'
 
-dotenv.config()
+if (process.env.NODE_ENV !== 'production') {
+  const dotenv = await import('dotenv')
+  dotenv.config()
+}
 
 export const {
     PORT = process.env.PORT,
