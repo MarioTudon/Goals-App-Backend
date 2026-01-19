@@ -18,7 +18,6 @@ export class AuthModel {
 
 
     static async register(userData) {
-        try {
             const user = await new Promise((resolve, reject) => {
                 goalsAppDB.get('SELECT * FROM users WHERE username = ?', [userData.username], (err, row) => {
                     if (err) reject(new customErrors.AppError(err.message, 'internal error', 500, 'something went wrong, please try again later'))
@@ -52,10 +51,6 @@ export class AuthModel {
             })
 
             return newUser
-
-        } catch (err) {
-            throw err
-        }
     }
 
     static async login(userData) {
