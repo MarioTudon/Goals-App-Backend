@@ -60,7 +60,6 @@ export class AuthModel {
         }
         const normalizedUsername = userData.username?.trim().toLowerCase()
 
-        try {
             const user = await new Promise((resolve, reject) => {
                 goalsAppDB.get('SELECT * FROM users WHERE username = ?', [normalizedUsername], (err, row) => {
                     if (err) reject(new customErrors.AppError(err.message, 'internal error', 500, 'something went wrong, please try again later'))
@@ -79,9 +78,6 @@ export class AuthModel {
             }
 
             return user
-        } catch (err) {
-            throw err
-        }
     }
 
     static async logout(refreshToken) {
