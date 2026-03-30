@@ -6,10 +6,10 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 export const {
-    PORT = process.env.PORT,
-    SALT_ROUNDS = process.env.SALT_ROUNDS,
-    ACCESS_JWT_KEY = process.env.ACCESS_JWT_KEY,
-    REFRESH_JWT_KEY = process.env.REFRESH_JWT_KEY
+    PORT,
+    SALT_ROUNDS,
+    ACCESS_JWT_KEY,
+    REFRESH_JWT_KEY
 } = process.env
 
 
